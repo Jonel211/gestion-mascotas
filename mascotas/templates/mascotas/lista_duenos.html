@@ -1,0 +1,55 @@
+{% extends 'mascotas/base.html' %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people-fill text-primary"></i> Dueños registrados</h2>
+    <a href="{% url 'crear_dueno' %}" class="btn btn-primary">
+        <i class="bi bi-person-plus"></i> Nuevo Dueño
+    </a>
+</div>
+
+<div class="card card-shadow border-0 rounded-4">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in duenos %}
+                    <tr>
+                        <td class="fw-semibold"><i class="bi bi-person-badge"></i> {{ d.nombre }}</td>
+                        <td><i class="bi bi-geo-alt-fill text-secondary"></i> {{ d.direccion }}</td>
+                        <td><i class="bi bi-telephone-fill"></i> {{ d.telefono }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{% url 'editar_dueno' d.id %}" class="btn btn-outline-warning">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <a href="{% url 'eliminar_dueno' d.id %}"
+                                   class="btn btn-outline-danger"
+                                   onclick="return confirm('¿Eliminar a {{ d.nombre }} ?');">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">
+                            <i class="bi bi-person-x fs-1"></i><br>
+                            No hay dueños registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

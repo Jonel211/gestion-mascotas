@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Mascotas</title>
+
+    <!-- Bootstrap 5 CSS + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        /* Estructura para footer fijo abajo */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: #f8f9fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Contenido principal que empuja el footer hacia abajo */
+        .content-wrapper {
+            flex: 1 0 auto;
+        }
+        
+        .navbar-brand i {
+            font-size: 1.8rem;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+        
+        .card-shadow:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Footer fijo abajo */
+        footer {
+            background: white;
+            border-top: 1px solid #dee2e6;
+            flex-shrink: 0;
+            width: 100%;
+            margin-top: auto;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: #f1f3f5;
+            transition: 0.2s;
+        }
+        
+        .btn-icon {
+            margin-right: 6px;
+        }
+        
+        .img-preview {
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        /* Aseguramos que el main ocupe todo el espacio disponible */
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar moderna -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'lista_mascotas' %}">
+                <i class="bi bi-paw"></i> Gestión de Mascotas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_mascotas' %}">
+                            <i class="bi bi-grid-3x3-gap-fill"></i> Mascotas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_duenos' %}">
+                            <i class="bi bi-people-fill"></i> Dueños
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container py-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer fijo abajo -->
+    <footer class="py-3 text-center text-muted small">
+        <i class="bi text-danger"></i> Sistema de Gestión de Mascotas
+    </footer>
+
+    <!-- Bootstrap JS (para navbar responsive y otros componentes) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

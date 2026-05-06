@@ -1,0 +1,137 @@
+{% extends 'mascotas/base.html' %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <h2 class="mb-2 mb-sm-0">
+        <i class="bi bi-grid-3x3-gap-fill text-success"></i> Mis Mascotas
+    </h2>
+    <a href="{% url 'crear_mascota' %}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Nueva Mascota
+    </a>
+</div>
+
+{% if mascotas %}
+<div class="row g-4">
+    {% for m in mascotas %}
+    <div class="col-sm-6 col-lg-4 col-xl-3">
+        <div class="card h-100 card-shadow border-0 rounded-4 overflow-hidden">
+            <!-- Foto destacada -->
+            <div class="position-relative" style="height: 220px; background: #f8f9fa;">
+                {% if m.foto %}
+                    <img src="{{ m.foto.url }}" 
+                        class="w-100 h-100" 
+                        style="object-fit: cover;"
+                        alt="{{ m.nombre }}">
+                    <!-- Badge de especie sobre la foto -->
+                    <span class="position-absolute top-0 end-0 m-2 badge bg-dark bg-opacity-75 rounded-pill">
+                        <i class="bi bi-tag"></i> {{ m.especie }}
+                    </span>
+                {% else %}
+                    <!-- Placeholder cuando no hay foto -->
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted">
+                        <i class="bi bi-camera fs-1 mb-2"></i>
+                        <span>Sin foto</span>
+                    </div>
+                    <span class="position-absolute top-0 end-0 m-2 badge bg-secondary rounded-pill">
+                        {{ m.especie }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Cuerpo de la tarjeta -->
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title fw-bold mb-0">
+                        <i class="bi text-danger small"></i> {{ m.nombre }}
+                    </h5>
+                    <span class="badge bg-info rounded-pill">
+                        <i class="bi bi-calendar"></i> {{ m.edad }} años
+                    </span>
+                </div>
+                
+                <!-- Información del dueño -->
+                <div class="mb-3">
+                    <span class="text-muted small d-flex align-items-center gap-1">
+                        <i class="bi bi-person-circle"></i> Dueño: 
+                        <strong class="text-dark">{{ m.dueno.nombre }}</strong>
+                    </span>
+                </div>
+
+                <!-- Detalles adicionales (opcional, según tu modelo) -->
+                <div class="border-top pt-2 mt-2">
+                    <small class="text-muted d-flex align-items-center gap-2">
+                        <i class="bi bi-info-circle"></i> ID: {{ m.id }}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Acciones en el footer de la tarjeta -->
+            <div class="card-footer bg-white border-0 pt-0 pb-3">
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="{% url 'editar_mascota' m.id %}" 
+                       class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a href="{% url 'eliminar_mascota' m.id %}"
+                       class="btn btn-sm btn-outline-danger"
+                       onclick="return confirm('¿Eliminar a {{ m.nombre }} permanentemente?');">
+                        <i class="bi bi-trash3"></i> Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<!-- Estado vacío mejorado -->
+<div class="text-center py-5">
+    <div class="mb-4">
+        <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+    </div>
+    <h4 class="text-muted">No hay mascotas registradas</h4>
+    <p class="text-secondary">Comienza agregando tu primera mascota</p>
+    <a href="{% url 'crear_mascota' %}" class="btn btn-primary mt-2">
+        <i class="bi bi-plus-circle"></i> Agregar primera mascota
+    </a>
+</div>
+{% endif %}
+
+<!-- Estilos adicionales para mejorar la experiencia -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,0.15) !important;
+    }
+    
+    /* Efecto de zoom suave en la imagen al hover */
+    .card .position-relative img {
+        transition: transform 0.4s ease;
+    }
+    
+    .card:hover .position-relative img {
+        transform: scale(1.05);
+    }
+    
+    /* Para mantener consistencia en todas las tarjetas */
+    .card .position-relative {
+        overflow: hidden;
+    }
+    
+    /* Mejora para móviles */
+    @media (max-width: 576px) {
+        .col-sm-6 {
+            padding: 0 8px;
+        }
+    }
+    
+    /* Ajuste para el placeholder de imagen */
+    .bg-opacity-75 {
+        background-color: rgba(0,0,0,0.75) !important;
+    }
+</style>
+{% endblock %}

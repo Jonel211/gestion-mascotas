@@ -1,0 +1,75 @@
+{% extends 'mascotas/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card card-shadow border-0 rounded-4">
+            <div class="card-header bg-white border-0 pt-4 pb-0">
+                <h3 class="mb-0">
+                    <i class="bi bi-plus-circle-fill text-success"></i> 
+                    {% if request.resolver_match.url_name == 'crear_mascota' %}
+                        Registrar nueva mascota
+                    {% else %}
+                        Editar mascota
+                    {% endif %}
+                </h3>
+                <p class="text-muted small mt-1">Completa los datos de tu compañero</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            {% if field.name == 'nombre' %}
+                                <i class="bi bi-tag"></i>
+                            {% elif field.name == 'especie' %}
+                                <i class="bi bi-gender-ambiguous"></i>
+                            {% elif field.name == 'edad' %}
+                                <i class="bi bi-calendar"></i>
+                            {% elif field.name == 'dueno' %}
+                                <i class="bi bi-person-hearts"></i>
+                            {% elif field.name == 'foto' %}
+                                <i class="bi bi-camera"></i>
+                            {% endif %}
+                            {{ field.label }}
+                        </label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="form-text text-muted small">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a href="{% url 'lista_mascotas' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Volver
+                        </a>
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="bi bi-check-lg"></i> Guardar mascota
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input, select, textarea {
+        border-radius: 12px !important;
+        border: 1px solid #ced4da;
+        padding: 8px 12px;
+        width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,.15);
+    }
+</style>
+{% endblock %}
