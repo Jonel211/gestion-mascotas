@@ -134,7 +134,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Soporte para WhiteNoise (opcional pero muy recomendado para servir archivos en Render)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -147,12 +146,5 @@ CLOUDINARY_STORAGE = {
 }
 
 # Esto le dice a Django que use Cloudinary para los archivos MEDIA
-#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
