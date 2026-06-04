@@ -98,15 +98,15 @@ USE_TZ = True
 
 # Cloudinary Configuración
 cloudinary.config(
-    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddcxdo1t8'),
-    api_key=os.environ.get('CLOUDINARY_API_KEY', '683135832982154'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET', 'ow0TQEtxc7KweXh0bcTe_-syBP4')
+    cloud_name=os.environ.get('CLOUD_NAME', 'ddcxdo1t8'),
+    api_key=os.environ.get('CLOUD_API_KEY', '789841842818279'),
+    api_secret=os.environ.get('CLOUD_API_SECRET', '4lXQ7KI1Lz1Pjac5Xe9PzMf1H9E')
 )
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddcxdo1t8'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '683135832982154'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'ow0TQEtxc7KweXh0bcTe_-syBP4'),
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME', 'ddcxdo1t8'),
+    'API_KEY': os.environ.get('CLOUD_API_KEY', '789841842818279'),
+    'API_SECRET': os.environ.get('CLOUD_API_SECRET', '4lXQ7KI1Lz1Pjac5Xe9PzMf1H9E'),
 }
 
 MEDIA_URL = '/media/'
