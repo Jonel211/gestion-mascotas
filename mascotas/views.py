@@ -9,18 +9,30 @@ def lista_mascotas(request):
     return render(request, 'mascotas/lista_mascotas.html', {'mascotas': mascotas})
 
 def crear_mascota(request):
-    form = MascotaForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('lista_mascotas')
+    if request.method == 'POST':
+        # Pasamos los archivos únicamente si la petición es POST
+        form = MascotaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_mascotas')
+    else:
+        form = MascotaForm()
+        
     return render(request, 'mascotas/form_mascota.html', {'form': form})
 
 def editar_mascota(request, id):
     mascota = get_object_or_404(Mascota, id=id)
-    form = MascotaForm(request.POST or None, request.FILES or None, instance=mascota)
-    if form.is_valid():
-        form.save()
-        return redirect('lista_mascotas')
+    
+    if request.method == 'POST':
+        # Pasamos los archivos únicamente si se envía el formulario
+        form = MascotaForm(request.POST, request.FILES, instance=mascota)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_mascotas')
+    else:
+        # Si es un GET, solo pasamos la instancia para rellenar los campos de texto
+        form = MascotaForm(instance=mascota)
+        
     return render(request, 'mascotas/form_mascota.html', {'form': form})
 
 def eliminar_mascota(request, id):
